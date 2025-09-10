@@ -12,6 +12,8 @@ package Debugged;
 //
 // Error 3: Output does not display counts for all letters (a-z)
 // "The program should print every letter of the alphabet in lower case and the letter’s count" - Program Description
+//
+// Inefficiency: In displayCounts, foundAny = true is redundant after the first execution of the if block.
 
 import java.util.Scanner;
 
@@ -25,6 +27,7 @@ public class Main {
         int[] counts = countCharacters(phrase);
         displayCounts(counts);
 
+
         scan.close();
     }
 
@@ -35,6 +38,7 @@ public class Main {
             char ch = phrase.charAt(i);
 
             if (isAlphabetic(ch)) {
+
                 int index = ch - 'a';
                 counts[index]++;
             }
@@ -43,21 +47,24 @@ public class Main {
         return counts;
     }
 
-    public static boolean isAlphabetic(char ch) {return ch >= 'a' && ch <= 'z';}
+    public static boolean isAlphabetic(char ch) {
+        return ch >= 'a' && ch <= 'z';
+    }
 
     public static void displayCounts(int[] counts) {
         System.out.println("\nResults:");
 
-        boolean foundAny = false;
+        int totalLetters = 0;
+
         for (int i = 0; i < counts.length; i++) {
 
             char letter = (char) ('a' + i);
             System.out.println(letter + ": " + counts[i]);
-            foundAny = true;
+            totalLetters += counts[i];
 
         }
 
-        if (!foundAny) {
+        if (totalLetters <= 0) {
             System.out.println("No alphabetic characters found in the phrase.");
         }
     }
